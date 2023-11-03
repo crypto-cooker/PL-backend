@@ -17,9 +17,9 @@ export const createNonce = async (req: Request, res: Response) => {
     const inputValidation = NonceSchema.validate(body)
     if (!!inputValidation.error) return res.status(400).json(inputValidation.error)
 
-    if (body.wallet != process.env.ADMIN_PUBLIC_KEY) {
-        return res.status(400).json("Invalid wallet.");
-    }
+    // if (body.wallet != process.env.ADMIN_PUBLIC_KEY) {
+    //     return res.status(400).json("Invalid wallet.");
+    // }
 
     // If nonce is there, remove it
     try {

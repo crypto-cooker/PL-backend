@@ -18,7 +18,7 @@ export const getStakeInfo = async (req: Request, res: Response) => {
     if (!!inputValidation.error) return res.status(400).json({ error: inputValidation.error.details[0].message });
 
     //  Check admin wallet address
-    if (body.wallet != ADMIN_ADDR) {
+    if (body.wallet != process.env.ADMIN_PUBLIC_KEY) {
         console.log("Invalid admin wallet, wallet: ", body.wallet);
         return res.status(500).json({
             error: "Invalid admin"
@@ -54,7 +54,7 @@ export const getAirdropInfo = async (req: Request, res: Response) => {
     if (!!inputValidation.error) return res.status(400).json({ error: inputValidation.error.details[0].message });
 
     //  Check admin wallet address
-    if (body.wallet != ADMIN_ADDR) {
+    if (body.wallet != process.env.ADMIN_PUBLIC_KEY) {
         console.log("Invalid admin wallet, wallet: ", body.wallet);
         return res.status(200).json({
             message: "Invalid admin"

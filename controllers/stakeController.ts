@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import fetch from "cross-fetch"
 import { addAdminSignAndConfirm } from "../program/script";
 
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
@@ -6,7 +7,7 @@ import { getMetadata } from "../program/script";
 import {
   Transaction,
 } from '@solana/web3.js';
-import { STAKE_TX_DISC, UNSTAKE_TX_DISC, connection } from "../program/config";
+import { CREATOR, STAKE_TX_DISC, UNSTAKE_TX_DISC, connection } from "../program/config";
 
 import StakeModel from '../models/stakeModel'
 // import fetch from 'node-fetch';
@@ -36,9 +37,9 @@ export async function lock(req: Request, res: Response) {
   }
 
   const mintAddr = stakeIx.keys[3].pubkey;
-  
+  console.log(mintAddr, "lock");
   const doc = await StakeModel.find({ mintAddr });
-  if(doc) {
+  if(doc.length>0) {
     return res.status(400).json({ error: "Mint Address already exists" });
   }
 
@@ -47,8 +48,10 @@ export async function lock(req: Request, res: Response) {
   try {
     let metadata = await Metadata.fromAccountAddress(connection, pda);
 
-    // if (metadata.data.creators[0].address != CREATOR || metadata.data.creators[0].verifed != 1)
-    //   return res.status(500).json({error: "Not the right collection"});
+    if (metadata.data.creators[0].address != CREATOR || metadata.data.creators[0].verified != true) {
+      console.log("Invalid creator: ", metadata.data.creators[0].address, ", verified: ", metadata.data.creators[0].verified);
+      return res.status(500).json({error: "Not the right collection"});
+    }
 
     const confirmed = await addAdminSignAndConfirm(tx);
 

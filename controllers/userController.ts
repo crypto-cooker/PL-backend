@@ -38,6 +38,7 @@ export const setProfile = async function (req: Request, res: Response) {
     });
 
     const inputValidation = UserSchema.validate(body);
+    console.log(inputValidation);
     if (!!inputValidation.error) return res.status(400).json({ error: inputValidation.error.details[0].message })
 
     //  update user profile

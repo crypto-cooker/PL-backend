@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post('/authorize', authorizeUser);
 router.get('/profile/:wallet', getProfile);
-router.post('/setprofile', verifyNonceMiddleware, setProfile);
+router.post('/setprofile', setProfile);
 
 export default router;

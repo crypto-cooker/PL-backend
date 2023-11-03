@@ -17,7 +17,9 @@ const whitelist = [
   "https://pioneer.vercel.app",
   "https://pioneerlegends.vercel.app",
   "https://pioneer-staking-overview.onrender.com",
-  "https://pioneer-legends-demo.vercel.app"]
+  "https://pioneer-legends-demo.vercel.app",
+  "https://pioneerlegends.io",
+  "https://www.pioneerlegends.io"]
 
 const corsOptions = {
   origin: whitelist,
